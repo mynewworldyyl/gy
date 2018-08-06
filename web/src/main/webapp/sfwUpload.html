@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Test</title>
+        
+        <style>
+          * {
+            margin:0px;
+            padding:0px;
+          }
+          .boxdiv {
+             width:100%; height:auto; border: dashed 1px blue; margin-top:10px; text-align: center;
+          }
+          
+          .contentDvi {
+            text-align: left;
+          }    
+        </style>   
+        <script type="text/javascript" src="./jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="./dc.js"></script>
+        
+       <script type="text/javascript">
+	       var initLogin = function() {
+	    	   $("#loginButton").click(function(){
+	    		   
+	    		   var un = $("#loginUserName").val();
+	    		   var pwd = $("#pwd").val();
+	    		   var cid = $("#cid").val();
+	    		   
+	    		   dc.login(un, pwd, cid, function(data){
+	    			   console.log(data);
+	    			   if(data.success) {
+	    				  // $("#loginStatu").css({'font': 'bold 20px arial,sans-serif'});
+	    				   $("#loginStatu").append(un);
+	    			   }else {
+	    				   $("#loginStatu").css({'color' : 'red'});
+	    				   $("#loginStatu").text(data.msg);
+	    			   }
+	    			   
+	    		   });
+	    		   $("#loginUserName").val(un);
+	    		   $("#pwd").val(pwd);
+	    		   $("#cid").val(cid);
+	    		   
+	    		   
+	    		 });
+	       }  
+	       
+	       $(document).ready(function(){
+	    	   
+	    	  initLogin();
+	    	  
+	    	  
+	    	  $("#apkInfo").click(function(){
+	    		  if(!dc.isLogin) {
+	    			  alert("notLogin");
+	    			  return;
+	    		  }
+	    		   var url = '/dc/rest/update/latestInfo?type=APK&userName=' + dc.actName;
+	    		   $.get(url,
+			    		   function(data,status){
+	    			          // var jdata = eval("'" + data + "'")
+	    			           if(status == 'success' && data.success) {
+	    			        	   data = dc.parseResponse(data);
+	    			        	   //var p = decodeURI(data.data.path);
+	    			        	   //console.log(p);
+	    			        	   console.log(data.data);
+	    			        	   var strs = ['path:', data.data.path, 'serialNum:',data.data.serialNum, 'versionName:',data.data.versionName];
+	    			        	   $("#info").text(strs.join(' '));
+	    			           } else {
+	    			        	   alert(data.msg);
+	    			           }
+			    		   }
+	    		   );
+	    		 });
+	    	 
+	    	  $("#apkFileDownload").click(function(){
+	    		   var url = '/dc/rest/file/dbfile?fileId='+$("#fileId").val()+'&userName=' + dc.actName;
+	    		   this.href = url;
+	    		   //this.click();
+	    		 });
+	    	  
+	       });
+	       
+       </script>   
+    </head>
+    
+    <body>
+    
+    <div style="border:solid 2 gray; margin-left:auto; margin-right:auto; width:1000px; height:1500px;">
+      
+       <div class="boxdiv">
+           <div class="contentDvi">
+            <h1 id='loginStatu'>登陆:</h1>
+		    <form id="loginForm" action="/dc/rest/user/app/login", method="POST"  target="#_blank" enctype="multipart/form-data">
+			    userName <input id="loginUserName" type="text" name="loginUserName" value="13266878991"/><br/>
+			    password:<input id="pwd" type="text" name="pwd" value="888888"/><br/>
+			    cid <input id="cid" type="text" name="cid" value=""/><br/>
+			    <input id="loginButton" type="button" value="提交" />
+		    </form>
+           </div>
+           
+       </div>
+       
+       <div class="boxdiv">
+        <div class="contentDvi">
+             <h1>Android APK上传</h1>
+		    <form action="/dc/rest/file/upload" method="POST" target="#_blank", enctype="multipart/form-data">
+	           <input type="hidden" name="userName" value="13266878991"/><br/>
+	           <input type="hidden" name="type" value="APK"/><br/>
+	                    版本名称<input type="text" name="versionName" value=""/><br/>
+	                   序列号：   <input type="text" name="serialNum" value=""/><br/>    
+		  file: <input type="file" name="apkfile"/><br/>
+	           <input type="submit" value="提交"/>
+           </form>
+            </div>
+           
+       </div>
+       
+      <div class="boxdiv">
+        <div class="contentDvi">
+             <h1>设备更新包上传</h1>
+		    <form action="/dc/rest/file/upload" method="POST" target="#_blank", enctype="multipart/form-data">
+	           <input type="hidden" name="userName" value="13266878991"/><br/>
+	            <input type="hidden" name="type" value="DeviceRom"/><br/>
+	                    版本名称<input type="text" name="versionName" value=""/><br/>
+	                   序列号：   <input type="text" name="serialNum" value=""/><br/>    
+		  file: <input type="file" name="apkfile"/><br/>
+	           <input type="submit" value="提交"/>
+           </form>
+            </div>
+       </div>
+       
+    </body>
+    
+</html>

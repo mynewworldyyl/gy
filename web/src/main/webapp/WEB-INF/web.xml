@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0">
+    <welcome-file-list>
+       <welcome-file>test.html</welcome-file>
+    </welcome-file-list>
+    
+    <context-param>
+       <param-name>contextConfigLocation</param-name>
+       <param-value>classpath:/spring/app-*.xml</param-value>
+    </context-param>
+   
+    <listener>
+       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+   
+   <servlet>
+		<servlet-name>JerseyServlet</servlet-name>
+		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+		  <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>com.gy</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JerseyServlet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>fileUploadServlet</servlet-name>
+		<servlet-class>com.gy.web.servlet.file.FileUploadServlet</servlet-class>
+		  <init-param>
+            <param-name>maxSingleSize</param-name>
+            <param-value>30</param-value>
+        </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>fileUploadServlet</servlet-name>
+		<url-pattern>/rest/file/upload</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>fileDownloadServlet</servlet-name>
+		<servlet-class>com.gy.web.servlet.file.DownloadServlet</servlet-class>
+		 <init-param>
+            <param-name>defaultDir</param-name>
+            <param-value>D:/fd/download</param-value>
+        </init-param>
+         <init-param>
+            <param-name>configFileName</param-name>
+            <param-value>config.xml</param-value>
+        </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>fileDownloadServlet</servlet-name>
+		<url-pattern>/rest/file/download</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>dbfileDownloadServlet</servlet-name>
+		<servlet-class>com.gy.web.servlet.file.DownloadDBFileServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dbfileDownloadServlet</servlet-name>
+		<url-pattern>/rest/file/dbfile</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- <servlet>  
+    <servlet-name>websocket</servlet-name>  
+    <servlet-class>net.techgy.im.net.WebSocketListener</servlet-class>  
+  </servlet>  
+  <servlet-mapping>  
+    <servlet-name>websocket</servlet-name>  
+    <url-pattern>/chatting</url-pattern>  
+  </servlet-mapping>  
+    
+    <servlet>  
+    <servlet-name>videoautio</servlet-name>  
+    <servlet-class>net.techgy.im.net.ViedoAudioSocketListener</servlet-class>  
+  </servlet>  
+  <servlet-mapping>  
+    <servlet-name>videoautio</servlet-name>  
+    <url-pattern>/va</url-pattern>  
+  </servlet-mapping>  -->
+  
+  <!-- <filter>
+	 <filter-name>CORS</filter-name>
+    <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+	<init-param>
+		<param-name>cors.allowed.origins</param-name>
+		<param-value>*</param-value>
+	</init-param>
+	<init-param>
+		<param-name>cors.allowed.methods</param-name>
+		<param-value>GET,POST,HEAD,OPTIONS,PUT</param-value>
+	</init-param>
+	<init-param>
+		<param-name>cors.allowed.headers</param-name>
+		<param-value>userName,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Access-Control-Allow-Origin</param-value>
+	</init-param>
+	<init-param>
+		<param-name>cors.exposed.headers</param-name>
+		<param-value>userName,Access-Control-Allow-Origin,Access-Control-Allow-Credentials</param-value>
+	</init-param>
+	<init-param>
+		<param-name>cors.support.credentials</param-name>
+		<param-value>false</param-value>
+	</init-param>
+	<init-param>
+		<param-name>cors.preflight.maxage</param-name>
+		<param-value>1800</param-value>
+	</init-param>
+	
+	<init-param>
+        <param-name>cors.allowOrigin</param-name>
+        <param-value>*</param-value>
+    </init-param>
+    <init-param>
+        <param-name>cors.supportsCredentials</param-name>
+        <param-value>false</param-value>
+    </init-param>
+    <init-param>
+        <param-name>cors.supportedHeaders</param-name>
+        <param-value>accept, authorization, origin,userName,Access-Control-Allow-Origin</param-value>
+    </init-param>
+    <init-param>
+        <param-name>cors.supportedMethods</param-name>
+        <param-value>GET, POST, HEAD, OPTIONS, PUT</param-value>
+    </init-param>
+    
+</filter>
+	<filter-mapping>
+		<filter-name>CORS</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+  
+  <filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>com.gy.web.filter.EncodingFilter</filter-class>
+ </filter>
+ 
+   <filter>
+		<filter-name>threadBinding</filter-name>
+		<filter-class>com.gy.web.filter.ContextFilter</filter-class>
+ </filter>
+ 
+ 
+ <filter-mapping>
+       <filter-name>encodingFilter</filter-name>
+       <url-pattern>/rest/*</url-pattern>
+ </filter-mapping>
+ 
+ <filter-mapping>
+       <filter-name>threadBinding</filter-name>
+       <url-pattern>/rest/*</url-pattern>
+ </filter-mapping>
+ 
+
+</web-app>

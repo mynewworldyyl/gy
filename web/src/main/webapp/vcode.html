@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Test</title>
+    </head>
+    
+    <h1>注册验证码:</h1>
+    <form action="/dc/rest/comm/sms/generatecode" method="POST" target="#_blank">
+	    btype: <input type="text" name="btype" value="1001" readonly="true"/><br/>
+	    mobile:<input type="text" name="mobile"/><br/>
+	    <input id="loginButton" type="submit" value="提交"/><br/>
+    </form>
+    
+    <h1>重置密码验证码:</h1>
+    <form action="/dc/rest/comm/sms/generatecode", method="POST" target="#_blank">
+	    btype:  <input type="text" name="btype" value="1002" readonly="true"/><br/>
+	    mobile:<input type="text" name="mobile"/><br/>
+	    <input type="submit" value="提交"/><br/>
+    </form>
+    
+    <h1>注册:</h1>
+    <form action="/dc/rest/user/regist1", method="POST"  target="#_blank">
+	    userName <input type="text" name="userName" value=""/><br/>
+	    password:<input type="text" name="password" value=""/><br/>
+	    nickName <input type="text" name="nickName" value=""/><br/>
+	    iconUrl:<input type="text" name="iconUrl" value=""/><br/>
+	    VerificationCode <input type="text" name="VerificationCode"/><br/>
+	    <input type="submit" value="提交"/><br/>
+    </form>
+    
+    <h1>更改密码:</h1>
+    <form action="/dc/rest/user/update/pwd", method="POST"  target="#_blank">
+	    userName <input type="text" name="userName" value=""/><br/>
+	    oldPwd:<input type="text" name="oldPwd" value=""/><br/>
+	    newPwd:<input type="text" name="newPwd" value=""/><br/>
+	    isForget <input type="checkbox" name="isForget" value="true"/><br/>
+	    VerificationCode <input type="text" name="VerificationCode"/><br/>
+	    <input type="hidden" name="userName" value="13266878991"/><br/>
+	    <input type="submit" value="提交"/><br/>
+    </form>
+    
+     <h1>登陆:</h1>
+    <form action="/dc/rest/user/app/login", method="POST"  target="#_blank">
+	    userName <input type="text" name="userName" value=""/><br/>
+	    password:<input type="text" name="pwd" value=""/><br/>
+	    cid <input type="text" name="cid" value=""/><br/>
+	    <input type="submit" value="提交"/><br/>
+    </form>
+    
+      <h1> 退出:</h1>
+    <form action="/dc/rest/user/app/logout", method="POST"  target="#_blank">
+    <input type="hidden" name="userName" value="13266878991"/><br/>
+	    <input type="submit" value="提交"/><br/>
+    </form>
+    
+    <h1>更新CID:</h1>
+    <form action="/dc/rest/user/updateCid", method="POST"  target="#_blank">
+        <input type="hidden" name="userName" value="13266878991"/><br/>
+	    cid <input type="text" name="cid" value=""/><br/>
+	    <input type="submit" value="提交"/><br/>
+    </form>
+    
+    <h1>文件上传:</h1>
+    <form action="/dc/rest/file/upload" method="POST" target="#_blank", enctype="multipart/form-data">
+         <input type="hidden" name="userName" value="13266878991"/><br/>
+	     file: <input type="file" name="btype" value="1001" readonly="true"/><br/>
+	           <input type="submit" value="提交"/><br/>
+    </form>
+    
+    <h1>下载文件:</h1>
+    <a href="/dc/rest/file/dbfile?fileId=012">测试文件</a>
+	
+	<br/>
+	<br/>
+	 <a href="/dc/apks/android-debug-unaligned.apk">android-debug-unaligned.apk</a>
+	 <br/>
+	 <a href="/dc/apks/android-debug.apk">ndroid-debug.apk</a>
+	
+    
+</html>

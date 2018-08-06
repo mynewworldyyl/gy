@@ -1,0 +1,9 @@
+# 在命令行下执行以下命令， 备份数据到 hy20150501.sql
+mysqldump -uibeansdb -pibeansdbpwd -hdowcooldb.mysql.rds.aliyuncs.com hy > hy20150501.sql
+
+# 进入mysql 数据库 还原数据
+mysql -uroot -proot
+
+use hy
+
+source hy20150501.sql
